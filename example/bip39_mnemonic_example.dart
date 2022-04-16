@@ -1,6 +1,6 @@
-import 'package:bip39_mnemonic/bip39_mnemonic.dart';
+import 'package:bip39_mnemonic/exports.dart';
 
 void main() {
-  var awesome = Awesome();
-  print('awesome: ${awesome.isAwesome}');
+  // var awesome = Awesome();
+  // print('awesome: ${awesome.isAwesome}');
 }
