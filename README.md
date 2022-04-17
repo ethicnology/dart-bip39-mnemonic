@@ -11,6 +11,8 @@ Mnemonic code for generating deterministic keys a.k.a. BIP39
 * Czech
 * Portuguese
 * Korean
+* Chinese (simplified)
+* Chinese (traditional)
 
 ## Usage
 
