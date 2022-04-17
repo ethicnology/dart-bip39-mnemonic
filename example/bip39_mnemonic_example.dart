@@ -1,4 +1,4 @@
-import 'package:bip39_mnemonic/exports.dart';
+import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:convert/convert.dart';
 
 void main() {
