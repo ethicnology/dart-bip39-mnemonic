@@ -1,7 +1,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![codecov](https://codecov.io/gh/ethicnology/dart-bip39-mnemonic/branch/main/graph/badge.svg)](https://codecov.io/gh/ethicnology/dart-bip39-mnemonic)
 [![Dart CI](https://github.com/ethicnology/dart-bip39-mnemonic/actions/workflows/dart.yml/badge.svg)](https://github.com/ethicnology/dart-bip39-mnemonic/actions/workflows/dart.yml)
-[![pub package](https://img.shields.io/pub/v/bip39-mnemonic.svg)](https://pub.dartlang.org/packages/bip39-mnemonic)
+[![pub package](https://img.shields.io/pub/v/bip39_mnemonic.svg)](https://pub.dartlang.org/packages/bip39_mnemonic)
 
 # dart-bip39-mnemonic
 Mnemonic code for generating deterministic keys a.k.a. BIP39  
