@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
+import 'package:pointycastle/digests/sha256.dart';
 import 'package:pointycastle/digests/sha512.dart';
 import 'package:pointycastle/key_derivators/api.dart';
 import 'package:pointycastle/key_derivators/pbkdf2.dart';
 import 'package:pointycastle/macs/hmac.dart';
-import 'package:pointycastle/digests/sha256.dart';
 
-List<int> pbkdf2(List<int> entropy, {String passphrase = ""}) {
+List<int> pbkdf2(String sentence, {String passphrase = ""}) {
   const blockLength = 128;
   const iterationCount = 2048;
   const desiredKeyLength = 64;
@@ -14,7 +15,7 @@ List<int> pbkdf2(List<int> entropy, {String passphrase = ""}) {
   final derivator = PBKDF2KeyDerivator(HMac(SHA512Digest(), blockLength));
   derivator.reset();
   derivator.init(Pbkdf2Parameters(salt, iterationCount, desiredKeyLength));
-  Uint8List result = derivator.process(Uint8List.fromList(entropy));
+  Uint8List result = derivator.process(Uint8List.fromList(sentence.codeUnits));
   return result.toList();
 }
 
