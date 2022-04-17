@@ -4,11 +4,12 @@ import 'wordlists/spanish.dart';
 import 'wordlists/italian.dart';
 import 'wordlists/czech.dart';
 import 'wordlists/portuguese.dart';
+import 'wordlists/korean.dart';
 
 /// BIP39:
 /// * Since the vast majority of BIP39 wallets supports only the English wordlist, it is strongly discouraged to use non-English wordlists for generating the mnemonic sentences.
 /// * If you still feel your application really needs to use a localized wordlist, use one of the following instead of inventing your own.
-enum Language { french, english, spanish, italian, czech, portuguese }
+enum Language { french, english, spanish, italian, czech, portuguese, korean }
 
 extension LanguageExtension on Language {
   List<String> get list {
@@ -25,6 +26,8 @@ extension LanguageExtension on Language {
         return czech;
       case Language.portuguese:
         return portuguese;
+      case Language.korean:
+        return korean;
     }
   }
 
@@ -42,6 +45,8 @@ extension LanguageExtension on Language {
         return czech.asMap();
       case Language.portuguese:
         return portuguese.asMap();
+      case Language.korean:
+        return korean.asMap();
     }
   }
 }

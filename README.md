@@ -10,6 +10,7 @@ Mnemonic code for generating deterministic keys a.k.a. BIP39
 * Italian
 * Czech
 * Portuguese
+* Korean
 
 ## Usage
 
