@@ -3,9 +3,11 @@
 Mnemonic code for generating deterministic keys a.k.a. BIP39
 
 ## Features
-### Wordlists:
+### Wordlists
 * French
 * English
+* Spanish
+* Italian
 
 ## Usage
 
