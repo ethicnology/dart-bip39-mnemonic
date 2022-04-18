@@ -196,4 +196,37 @@ void main() async {
       }
     });
   });
+
+  group('japanese', () {
+    var vector = vectors['japanese']!;
+    var language = Language.japanese;
+    test('Mnemonic.fromSentence', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromSentence(
+          vector[i]['mnemonic']!,
+          language,
+        );
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
+    test('Mnemonic.toSeed', () {
+      for (var i = 0; i < vector.length; i++) {
+        List<int> bytes = hex.decode(vector[i]['entropy']!);
+        var mnemonic = Mnemonic(bytes, language);
+        var passphrase = vector[i]['passphrase']!;
+        var seed = mnemonic.toSeed(passphrase: passphrase);
+        expect(hex.encode(seed), equals(vector[i]['seed']!));
+      }
+    });
+
+    test('Mnemonic.toSentence', () {
+      for (var i = 0; i < vector.length; i++) {
+        List<int> bytes = hex.decode(vector[i]['entropy']!);
+        var mnemonic = Mnemonic(bytes, language);
+        var sentence = mnemonic.sentence;
+        expect(sentence, equals(vector[i]['mnemonic']!));
+      }
+    });
+  });
 }
