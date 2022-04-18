@@ -67,7 +67,7 @@ class Mnemonic {
     for (int index in _indexes) {
       result.add(language.list[index]);
     }
-    return result.join(' ');
+    return result.join(language.separator);
   }
 
   /// Constructs Mnemonic from entropy bytes.
@@ -85,7 +85,7 @@ class Mnemonic {
 
   /// Constructs Mnemonic from a sentence by retrieving the original entropy.
   Mnemonic.fromSentence(String sentence, this.language) {
-    List<String> words = sentence.split(' ');
+    List<String> words = sentence.split(language.separator);
     List<int> indexes = [];
     Map<int, String> map = language.map;
     // convert to indexes.
@@ -145,6 +145,8 @@ class Mnemonic {
   /// The length of the derived key is 512 bits (= 64 bytes).
   /// * This seed can be later used to generate deterministic wallets using BIP-0032 or similar methods.
   List<int> toSeed({String passphrase = ""}) {
-    return pbkdf2(sentence, passphrase: passphrase);
+    // when generating the seed, change the ideographic spaces into normal ASCII spaces.
+    var normalize = sentence.replaceAll(language.separator, '\u{0020}');
+    return pbkdf2(normalize, passphrase: passphrase);
   }
 }
