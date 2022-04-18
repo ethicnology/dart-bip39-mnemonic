@@ -8,8 +8,7 @@ void main() {
   List<int> bytesEntropy = hex.decode(hexEntropy);
 
   var mnemonic = Mnemonic(bytesEntropy, Language.english);
-  String sentence = mnemonic.toSentence();
-  print(sentence);
+  print(mnemonic.sentence);
   // guess robot jeans pistol gallery copper dutch recall slow shift body win distance add buddy moment sample visit hat spend viable punch fortune faith
 
   List<int> bytesSeed = mnemonic.toSeed();

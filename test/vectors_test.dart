@@ -31,7 +31,7 @@ void main() async {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.toSentence();
+        var sentence = mnemonic.sentence;
         expect(sentence, equals(vector[i]['mnemonic']!));
       }
     });
@@ -63,7 +63,7 @@ void main() async {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.toSentence();
+        var sentence = mnemonic.sentence;
         expect(sentence, equals(vector[i]['mnemonic']!));
       }
     });
@@ -95,7 +95,7 @@ void main() async {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.toSentence();
+        var sentence = mnemonic.sentence;
         expect(sentence, equals(vector[i]['mnemonic']!));
       }
     });
@@ -127,7 +127,7 @@ void main() async {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.toSentence();
+        var sentence = mnemonic.sentence;
         expect(sentence, equals(vector[i]['mnemonic']!));
       }
     });
@@ -159,7 +159,7 @@ void main() async {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.toSentence();
+        var sentence = mnemonic.sentence;
         expect(sentence, equals(vector[i]['mnemonic']!));
       }
     });
@@ -191,7 +191,7 @@ void main() async {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.toSentence();
+        var sentence = mnemonic.sentence;
         expect(sentence, equals(vector[i]['mnemonic']!));
       }
     });

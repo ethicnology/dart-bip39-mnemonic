@@ -58,7 +58,7 @@ void main() {
     test('Mnemonic.toSentence', () {
       List<int> bytes = hex.decode(vector[0]['entropy']!);
       var mnemonic = Mnemonic(bytes, language);
-      var sentence = mnemonic.toSentence();
+      var sentence = mnemonic.sentence;
       expect(sentence, equals(vector[0]['mnemonic']!));
     });
   });
@@ -85,7 +85,7 @@ void main() {
     test('Mnemonic.toSentence', () {
       List<int> bytes = hex.decode(vector[0]['entropy']!);
       var mnemonic = Mnemonic(bytes, language);
-      var sentence = mnemonic.toSentence();
+      var sentence = mnemonic.sentence;
       expect(sentence, equals(vector[0]['mnemonic']!));
     });
   });
@@ -112,7 +112,7 @@ void main() {
     test('Mnemonic.toSentence', () {
       List<int> bytes = hex.decode(vector[0]['entropy']!);
       var mnemonic = Mnemonic(bytes, language);
-      var sentence = mnemonic.toSentence();
+      var sentence = mnemonic.sentence;
       expect(sentence, equals(vector[0]['mnemonic']!));
     });
   });

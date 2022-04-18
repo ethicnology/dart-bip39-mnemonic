@@ -58,6 +58,18 @@ class Mnemonic {
     return indexes;
   }
 
+  /// Returns mnemonic sentence encoded in the specified language.
+  ///
+  /// BIP39:
+  /// * Finally, we convert these numbers into words and use the joined words as a mnemonic sentence.
+  String get sentence {
+    List<String> result = [];
+    for (int index in _indexes) {
+      result.add(language.list[index]);
+    }
+    return result.join(' ');
+  }
+
   /// Constructs Mnemonic from entropy bytes.
   Mnemonic(this.entropy, this.language) {
     if (![128, 160, 192, 224, 256].contains(_ENT)) {
@@ -126,18 +138,6 @@ class Mnemonic {
     }
   }
 
-  /// Returns mnemonic sentence encoded in the specified language.
-  ///
-  /// BIP39:
-  /// * Finally, we convert these numbers into words and use the joined words as a mnemonic sentence.
-  String toSentence() {
-    List<String> result = [];
-    for (int index in _indexes) {
-      result.add(language.list[index]);
-    }
-    return result.join(' ');
-  }
-
   /// BIP39:
   /// * A user may decide to protect their mnemonic with a passphrase. If a passphrase is not present, an empty string "" is used instead.
   /// * To create a binary seed from the mnemonic, we use the PBKDF2 function with a mnemonic sentence (in UTF-8 NFKD) used as the password and the string "mnemonic" + passphrase (again in UTF-8 NFKD) used as the salt.
@@ -145,6 +145,6 @@ class Mnemonic {
   /// The length of the derived key is 512 bits (= 64 bytes).
   /// * This seed can be later used to generate deterministic wallets using BIP-0032 or similar methods.
   List<int> toSeed({String passphrase = ""}) {
-    return pbkdf2(toSentence(), passphrase: passphrase);
+    return pbkdf2(sentence, passphrase: passphrase);
   }
 }
