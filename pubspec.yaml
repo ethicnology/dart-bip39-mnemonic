@@ -11,3 +11,4 @@ dev_dependencies:
   convert: ^3.0.1
 dependencies: 
   pointycastle: ^3.5.2
+  unorm_dart: ^0.2.0
