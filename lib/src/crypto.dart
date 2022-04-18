@@ -6,6 +6,7 @@ import 'package:pointycastle/digests/sha512.dart';
 import 'package:pointycastle/key_derivators/api.dart';
 import 'package:pointycastle/key_derivators/pbkdf2.dart';
 import 'package:pointycastle/macs/hmac.dart';
+import 'package:unorm_dart/unorm_dart.dart';
 
 /// BIP39: To create a binary seed from the mnemonic, we use the PBKDF2 function with a mnemonic sentence (in UTF-8 NFKD) used as the password and the string "mnemonic" + passphrase (again in UTF-8 NFKD) used as the salt.
 /// The iteration count is set to 2048 and HMAC-SHA512 is used as the pseudo-random function.
@@ -14,12 +15,14 @@ List<int> pbkdf2(String sentence, {String passphrase = ""}) {
   const blockLength = 128;
   const iterationCount = 2048;
   const desiredKeyLength = 64;
-  final salt = Uint8List.fromList(utf8.encode("mnemonic$passphrase"));
+  String nfkdPassphrase = nfkd("mnemonic$passphrase");
+  String nfkdSentence = nfkd(sentence);
+  final salt = Uint8List.fromList(utf8.encode(nfkdPassphrase));
   final derivator = PBKDF2KeyDerivator(HMac(SHA512Digest(), blockLength));
   derivator.reset();
   derivator.init(Pbkdf2Parameters(salt, iterationCount, desiredKeyLength));
   Uint8List result = derivator.process(
-    Uint8List.fromList(utf8.encode(sentence)),
+    Uint8List.fromList(utf8.encode(nfkdSentence)),
   );
   return result.toList();
 }
