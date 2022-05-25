@@ -16,3 +16,7 @@
 - Upgrade dependencies
 - Upgrade dart SDK 2.17.1
 - Reverted language enum refactoring (file based wordlists introduce async with too much edge effect).
+
+## 2.0.2
+
+- Downgrad dart SDK 2.17.1 -> 2.16.1
