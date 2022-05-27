@@ -64,8 +64,9 @@ class Mnemonic {
   /// * Finally, we convert these numbers into words and use the joined words as a mnemonic sentence.
   String get sentence {
     List<String> result = [];
+    List<String> wordlist = language.list;
     for (int index in _indexes) {
-      result.add(language.list[index]);
+      result.add(wordlist[index]);
     }
     return result.join(language.separator);
   }
