@@ -20,3 +20,6 @@
 ## 2.0.2
 
 - Downgrad dart SDK 2.17.1 -> 2.16.1
+
+## 2.1.0
+- Upgrade dart SDK 2.17.0
