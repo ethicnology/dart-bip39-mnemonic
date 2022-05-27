@@ -1,80 +1,34 @@
-import 'wordlists/french.dart';
-import 'wordlists/english.dart';
-import 'wordlists/spanish.dart';
-import 'wordlists/italian.dart';
-import 'wordlists/czech.dart';
-import 'wordlists/portuguese.dart';
-import 'wordlists/korean.dart';
-import 'wordlists/chinese_simplified.dart';
-import 'wordlists/chinese_traditional.dart';
-import 'wordlists/japanese.dart';
+import 'dart:io';
 
 /// BIP39:
 /// * Since the vast majority of BIP39 wallets supports only the English wordlist, it is strongly discouraged to use non-English wordlists for generating the mnemonic sentences.
 /// * If you still feel your application really needs to use a localized wordlist, use one of the following instead of inventing your own.
 enum Language {
-  french,
-  english,
-  spanish,
-  italian,
-  czech,
-  portuguese,
-  korean,
-  simplifiedChinese,
-  traditionalChinese,
-  japanese
-}
+  french('french'),
+  english('english'),
+  spanish('spanish'),
+  italian('italian'),
+  czech('czech'),
+  portuguese('portuguese'),
+  korean('korean'),
+  simplifiedChinese('chinese_simplified'),
+  traditionalChinese('chinese_traditional'),
+  japanese('japanese');
 
-extension LanguageExtension on Language {
+  final String name;
+  const Language(this.name);
+
   List<String> get list {
-    switch (this) {
-      case Language.french:
-        return french;
-      case Language.english:
-        return english;
-      case Language.spanish:
-        return spanish;
-      case Language.italian:
-        return italian;
-      case Language.czech:
-        return czech;
-      case Language.portuguese:
-        return portuguese;
-      case Language.korean:
-        return korean;
-      case Language.simplifiedChinese:
-        return simplifiedChinese;
-      case Language.traditionalChinese:
-        return traditionalChinese;
-      case Language.japanese:
-        return japanese;
+    List<String> wordlist = [];
+    var config = File("./lib/src/wordlists/$name.txt");
+    List<String>? lines = config.readAsLinesSync();
+    for (var word in lines) {
+      wordlist.add(word);
     }
+    return wordlist;
   }
 
-  Map<int, String> get map {
-    switch (this) {
-      case Language.french:
-        return french.asMap();
-      case Language.english:
-        return english.asMap();
-      case Language.spanish:
-        return spanish.asMap();
-      case Language.italian:
-        return italian.asMap();
-      case Language.czech:
-        return czech.asMap();
-      case Language.portuguese:
-        return portuguese.asMap();
-      case Language.korean:
-        return korean.asMap();
-      case Language.simplifiedChinese:
-        return simplifiedChinese.asMap();
-      case Language.traditionalChinese:
-        return traditionalChinese.asMap();
-      case Language.japanese:
-        return japanese.asMap();
-    }
-  }
+  Map<int, String> get map => list.asMap();
 
   String get separator {
     if (this == Language.japanese) {
