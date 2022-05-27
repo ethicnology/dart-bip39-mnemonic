@@ -15,12 +15,12 @@ enum Language {
   traditionalChinese('chinese_traditional'),
   japanese('japanese');
 
-  final String name;
-  const Language(this.name);
+  final String label;
+  const Language(this.label);
 
   List<String> get list {
     List<String> wordlist = [];
-    var config = File("./lib/src/wordlists/$name.txt");
+    var config = File("./lib/src/wordlists/$label.txt");
     List<String>? lines = config.readAsLinesSync();
     for (var word in lines) {
       wordlist.add(word);
