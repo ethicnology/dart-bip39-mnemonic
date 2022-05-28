@@ -26,3 +26,8 @@
 - refactor: language enum enhanced, wordlists .dart -> .txt
 - fix: Enhanced enum with field 'name' causes segfault
 - Thanks to this refactoring this package consume less RAM by loading only needed worlist. 
+
+## 2.2.0
+- Revert "refactor: language enum enhanced, wordlists .dart -> .txt" from 2.1.0
+- refactor: language enum is still enhanced but file based wordlist are removed in favor of RAM loaded. 
+- Introducing label attribute for Language enum.  
