@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:path/path.dart' as path;
 
 /// BIP39:
 /// * Since the vast majority of BIP39 wallets supports only the English wordlist, it is strongly discouraged to use non-English wordlists for generating the mnemonic sentences.
@@ -15,13 +16,17 @@ enum Language {
   traditionalChinese('chinese_traditional'),
   japanese('japanese');
 
-  final String label;
-  const Language(this.label);
+  final String _label;
+  const Language(this._label);
+
+  String get label => _label;
 
   List<String> get list {
     List<String> wordlist = [];
-    var config = File("./lib/src/wordlists/$label.txt");
-    List<String>? lines = config.readAsLinesSync();
+    var context = path.Context();
+    var absolute = Directory.current.absolute.path;
+    var wordlistFile = File(context.join('$absolute/wordlists/', '$label.txt'));
+    List<String>? lines = wordlistFile.readAsLinesSync();
     for (var word in lines) {
       wordlist.add(word);
     }

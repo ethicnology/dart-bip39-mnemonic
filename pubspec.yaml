@@ -10,5 +10,6 @@ dev_dependencies:
   test: ^1.21.1
   convert: ^3.0.1
 dependencies: 
+  path: ^1.8.2
   pointycastle: ^3.6.0
   unorm_dart: ^0.2.0
