@@ -38,3 +38,6 @@
 - passphrase is now a attribute of Mnemonic class Mnemonic.
 - seed replace Mnemonic.toSeed(passphrase)
 - tests update -> 100% coverage
+
+## 3.0.1
+- README update
