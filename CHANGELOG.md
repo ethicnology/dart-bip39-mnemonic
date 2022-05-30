@@ -31,3 +31,10 @@
 - Revert "refactor: language enum enhanced, wordlists .dart -> .txt" from 2.1.0
 - refactor: language enum is still enhanced but file based wordlist are removed in favor of RAM loaded. 
 - Introducing label attribute for Language enum.  
+
+## 3.0.0
+-  Language enum reorder, english on top to encourage users to use english mnemonic. 
+- label is no longer private (in case user want to change language label)
+- passphrase is now a attribute of Mnemonic class Mnemonic.
+- seed replace Mnemonic.toSeed(passphrase)
+- tests update -> 100% coverage
