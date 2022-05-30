@@ -18,21 +18,23 @@ void main() async {
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var seed = mnemonic.toSeed(passphrase: "TREZOR");
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
@@ -42,29 +44,28 @@ void main() async {
     var language = Language.french;
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
-        var mnemonic = Mnemonic.fromSentence(
-          vector[i]['mnemonic']!,
-          language,
-        );
+        var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var seed = mnemonic.toSeed(passphrase: "TREZOR");
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
@@ -74,29 +75,28 @@ void main() async {
     var language = Language.spanish;
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
-        var mnemonic = Mnemonic.fromSentence(
-          vector[i]['mnemonic']!,
-          language,
-        );
+        var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var seed = mnemonic.toSeed(passphrase: "TREZOR");
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
@@ -106,29 +106,28 @@ void main() async {
     var language = Language.italian;
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
-        var mnemonic = Mnemonic.fromSentence(
-          vector[i]['mnemonic']!,
-          language,
-        );
+        var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var seed = mnemonic.toSeed(passphrase: "TREZOR");
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
@@ -138,29 +137,28 @@ void main() async {
     var language = Language.traditionalChinese;
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
-        var mnemonic = Mnemonic.fromSentence(
-          vector[i]['mnemonic']!,
-          language,
-        );
+        var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var seed = mnemonic.toSeed(passphrase: "TREZOR");
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
@@ -170,29 +168,28 @@ void main() async {
     var language = Language.simplifiedChinese;
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
-        var mnemonic = Mnemonic.fromSentence(
-          vector[i]['mnemonic']!,
-          language,
-        );
+        var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var seed = mnemonic.toSeed(passphrase: "TREZOR");
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
@@ -202,30 +199,28 @@ void main() async {
     var language = Language.japanese;
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
-        var mnemonic = Mnemonic.fromSentence(
-          vector[i]['mnemonic']!,
-          language,
-        );
+        var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
 
-    test('Mnemonic.toSeed', () {
+    test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
-        var mnemonic = Mnemonic(bytes, language);
-        var passphrase = vector[i]['passphrase']!;
-        var seed = mnemonic.toSeed(passphrase: passphrase);
-        expect(hex.encode(seed), equals(vector[i]['seed']!));
+        var mnemonic = Mnemonic(
+          bytes,
+          language,
+          passphrase: vector[i]['passphrase']!,
+        );
+        expect(hex.encode(mnemonic.seed), equals(vector[i]['seed']!));
       }
     });
 
-    test('Mnemonic.toSentence', () {
+    test('Mnemonic.sentence', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
         var mnemonic = Mnemonic(bytes, language);
-        var sentence = mnemonic.sentence;
-        expect(sentence, equals(vector[i]['mnemonic']!));
+        expect(mnemonic.sentence, equals(vector[i]['mnemonic']!));
       }
     });
   });
