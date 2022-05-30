@@ -14,11 +14,13 @@ class Mnemonic {
   late List<int> entropy;
 
   /// The language affect the sentence and the seed generation.
-  ///
-  /// BIP39:
-  /// * Since the vast majority of BIP39 wallets supports only the English wordlist, it is strongly discouraged to use non-English wordlists for generating the mnemonic sentences.
-  /// * If you still feel your application really needs to use a localized wordlist, use one of the following instead of inventing your own.
+  /// BIP39: Since the vast majority of BIP39 wallets supports only the English wordlist, it is strongly discouraged to use non-English wordlists for generating the mnemonic sentences. If you still feel your application really needs to use a localized wordlist, use one of the following instead of inventing your own.
   Language language;
+
+  /// Passphrase is only used on seed generation.
+  /// BIP39:  A user may decide to protect their mnemonic with a passphrase.
+  /// If a passphrase is not present, an empty string "" is used instead.
+  String passphrase;
 
   /// BIP39: We refer to the initial entropy length as ENT.
   int get _ENT => entropy.length * 8;
@@ -37,17 +39,13 @@ class Mnemonic {
   }
 
   /// Returns entropy + checksum in binary string.
-  ///
-  /// BIP39:
-  /// * This checksum is appended to the end of the initial entropy.
+  /// BIP39: This checksum is appended to the end of the initial entropy.
   String get _binary {
     return bytesToBits(entropy) + _checksum;
   }
 
   /// Returns mnemonic indexes.
-  ///
-  /// BIP39:
-  /// * Next, these concatenated bits are split into groups of 11 bits, each encoding a number from 0-2047, serving as an index into a wordlist.
+  /// BIP39: Next, these concatenated bits are split into groups of 11 bits, each encoding a number from 0-2047, serving as an index into a wordlist.
   List<int> get _indexes {
     List<int> indexes = [];
     for (var i = 0; i < _binary.length; i += 11) {
@@ -58,34 +56,45 @@ class Mnemonic {
     return indexes;
   }
 
-  /// Returns mnemonic sentence encoded in the specified language.
-  ///
-  /// BIP39:
-  /// * Finally, we convert these numbers into words and use the joined words as a mnemonic sentence.
-  String get sentence {
+  /// BIP39: Finally, we convert these numbers (indexes) into words.
+  List<String> get words {
     List<String> result = [];
     List<String> wordlist = language.list;
     for (int index in _indexes) {
       result.add(wordlist[index]);
     }
-    return result.join(language.separator);
+    return result;
+  }
+
+  /// BIP39: Use the joined words as a mnemonic sentence.
+  String get sentence {
+    return words.join(language.separator);
+  }
+
+  /// BIP39: To create a binary seed from the mnemonic, we use the PBKDF2 function with a mnemonic sentence (in UTF-8 NFKD) used as the password and the string "mnemonic" + passphrase (again in UTF-8 NFKD) used as the salt.
+  /// The iteration count is set to 2048 and HMAC-SHA512 is used as the pseudo-random function.
+  /// The length of the derived key is 512 bits (= 64 bytes). This seed can be later used to generate deterministic wallets using BIP-0032 or similar methods.
+  List<int> get seed {
+    var normalize = sentence.replaceAll(language.separator, '\u{0020}');
+    return pbkdf2(normalize, passphrase: passphrase);
   }
 
   /// Constructs Mnemonic from entropy bytes.
-  Mnemonic(this.entropy, this.language) {
+  Mnemonic(this.entropy, this.language, {this.passphrase = ""}) {
     if (![128, 160, 192, 224, 256].contains(_ENT)) {
       throw Exception("mnemonic: unexpected initial entropy length");
     }
   }
 
   /// Constructs Mnemonic from random secure 256 bits entropy.
-  Mnemonic.generate(this.language) {
+  Mnemonic.generate(this.language, {this.passphrase = ""}) {
     var random = Random.secure();
     entropy = List<int>.generate(32, (i) => random.nextInt(256));
   }
 
   /// Constructs Mnemonic from a sentence by retrieving the original entropy.
-  Mnemonic.fromSentence(String sentence, this.language) {
+  Mnemonic.fromSentence(String sentence, this.language,
+      {this.passphrase = ""}) {
     List<String> words = sentence.split(language.separator);
     List<int> indexes = [];
     Map<int, String> map = language.map;
@@ -137,17 +146,5 @@ class Mnemonic {
     if (_checksum != extractedChecksum) {
       throw Exception('mnemonic: invalid checksum');
     }
-  }
-
-  /// BIP39:
-  /// * A user may decide to protect their mnemonic with a passphrase. If a passphrase is not present, an empty string "" is used instead.
-  /// * To create a binary seed from the mnemonic, we use the PBKDF2 function with a mnemonic sentence (in UTF-8 NFKD) used as the password and the string "mnemonic" + passphrase (again in UTF-8 NFKD) used as the salt.
-  /// The iteration count is set to 2048 and HMAC-SHA512 is used as the pseudo-random function.
-  /// The length of the derived key is 512 bits (= 64 bytes).
-  /// * This seed can be later used to generate deterministic wallets using BIP-0032 or similar methods.
-  List<int> toSeed({String passphrase = ""}) {
-    // when generating the seed, change the ideographic spaces into normal ASCII spaces.
-    var normalize = sentence.replaceAll(language.separator, '\u{0020}');
-    return pbkdf2(normalize, passphrase: passphrase);
   }
 }
