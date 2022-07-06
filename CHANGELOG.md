@@ -41,3 +41,6 @@
 
 ## 3.0.1
 - README update
+
+## 3.0.2
+- Add a method to validate a specific menmonic word
