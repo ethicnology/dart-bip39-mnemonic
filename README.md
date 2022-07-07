@@ -58,6 +58,17 @@ void main() {
   // 7e71249c8ebf603afb68e1b4c6fc18c8
   print(hex.encode(mnemonic3.seed));
   // ad926f1f185ba7745f2c98733a83e51717a58ec83ef52c5cd12048aa8fbe4b2511cf12c2a514d2886510f7020b8a0c1c75bedacfbb3b34cd2f3d8d2c038d531e
+
+  // Check if a word is BIP39 compatible
+  print(Language.english.isValid('baguette')); // false
+
+  // NFKD word formatting is mandatory in BIP39, please take care: https://github.com/flutter/flutter/issues/104927#issuecomment-1141140735
+  var french = Language.french;
+  String nfkdDisabled = 'échelle';
+  String nfkdEnabled = 'échelle';
+  print(french.isValid(nfkdDisabled)); // false
+  print(french.isValid(nfkdEnabled)); // true
+  print(french.isValid(nfkd(nfkdDisabled))); // NFKD formatted using unorm
 }
 
 ```
