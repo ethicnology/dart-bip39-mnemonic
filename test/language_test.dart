@@ -23,4 +23,18 @@ void main() {
       }
     });
   });
+
+  group('isValid', () {
+    test('check if word exists in a list', () {
+      expect(Language.english.isValid('admit'), true);
+    });
+
+    test('check if word doesn\'t exist in a wrong list', () {
+      expect(Language.simplifiedChinese.isValid('admit'), false);
+    });
+
+    test('check if word doesn\'t exist in a list', () {
+      expect(Language.english.isValid('hey'), false);
+    });
+  });
 }
