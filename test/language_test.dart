@@ -36,5 +36,14 @@ void main() {
     test('check if word doesn\'t exist in a list', () {
       expect(Language.english.isValid('hey'), false);
     });
+
+    // https://github.com/flutter/flutter/issues/104927#issuecomment-1141319254
+    test('check if word is NFKD, no', () {
+      expect(Language.french.isValid('échelle'), false); // non NFKD
+    });
+
+    test('check if word is NFKD, yes', () {
+      expect(Language.french.isValid('échelle'), true); // NFKD
+    });
   });
 }
