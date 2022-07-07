@@ -38,4 +38,9 @@ enum Language {
       return '\u{0020}'; // space (SP)
     }
   }
+
+  /// isValid checks the provided word presence in the wordlist
+  bool isValid(String word) {
+    return list.contains(word);
+  }
 }
