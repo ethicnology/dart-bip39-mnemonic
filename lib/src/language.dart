@@ -42,6 +42,6 @@ enum Language {
 
   /// isValid checks the provided word presence in the wordlist
   bool isValid(String word) {
-    return list.contains(nfkd(word));
+    return list.contains(word);
   }
 }
