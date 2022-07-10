@@ -43,4 +43,7 @@
 - README update
 
 ## 3.0.2
-- Add a method to validate a specific menmonic word
+- Add a method to validate a specific mnemonic word
+
+## 3.0.3
+- isValid function formats input (NFKD)
