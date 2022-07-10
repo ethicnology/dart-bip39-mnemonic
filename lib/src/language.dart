@@ -8,6 +8,7 @@ import 'package:bip39_mnemonic/src/wordlists/korean.dart';
 import 'package:bip39_mnemonic/src/wordlists/chinese_simplified.dart';
 import 'package:bip39_mnemonic/src/wordlists/chinese_traditional.dart';
 import 'package:bip39_mnemonic/src/wordlists/japanese.dart';
+import 'package:unorm_dart/unorm_dart.dart';
 
 /// BIP39: Since the vast majority of BIP39 wallets supports only the English wordlist, it is strongly discouraged to use non-English wordlists for generating the mnemonic sentences.
 /// If you still feel your application really needs to use a localized wordlist, use one of the following instead of inventing your own.
@@ -39,8 +40,8 @@ enum Language {
     }
   }
 
-  /// isValid checks the provided word presence in the wordlist
+  /// isValid function formats input (NFKD) and check his existence in the current language wordlist
   bool isValid(String word) {
-    return list.contains(word);
+    return list.contains(nfkd(word));
   }
 }
