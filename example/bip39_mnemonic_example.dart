@@ -1,6 +1,5 @@
 import 'package:bip39_mnemonic/bip39_mnemonic.dart';
 import 'package:convert/convert.dart'; // convert bytes to hexadecimal and vice-versa
-import 'package:unorm_dart/unorm_dart.dart';
 
 void main() {
   // DO NOT USE THESE DATA!
@@ -36,9 +35,8 @@ void main() {
 
   // NFKD word formatting is mandatory in BIP39, please take care: https://github.com/flutter/flutter/issues/104927#issuecomment-1141140735
   var french = Language.french;
-  String nfkdDisabled = 'échelle';
-  String nfkdEnabled = 'échelle';
-  print(french.isValid(nfkdDisabled)); // false
-  print(french.isValid(nfkdEnabled)); // true
-  print(french.isValid(nfkd(nfkdDisabled))); // NFKD formatted using unorm
+  String nonNfkd = 'échelle';
+  String nfkd = 'échelle';
+  print(french.isValid(nfkd)); // true
+  print(french.isValid(nonNfkd)); // true, because isValid formats input}
 }
