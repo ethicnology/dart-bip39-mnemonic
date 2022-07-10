@@ -38,11 +38,11 @@ void main() {
     });
 
     // https://github.com/flutter/flutter/issues/104927#issuecomment-1141319254
-    test('check if word is NFKD, no', () {
-      expect(Language.french.isValid('échelle'), false); // non NFKD
+    test('non NFKD formatted', () {
+      expect(Language.french.isValid('échelle'), true); // non NFKD
     });
 
-    test('check if word is NFKD, yes', () {
+    test('NFKD formatted', () {
       expect(Language.french.isValid('échelle'), true); // NFKD
     });
   });
