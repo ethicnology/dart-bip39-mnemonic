@@ -104,8 +104,7 @@ class Mnemonic {
     for (var word in words) {
       var nfkdWord = nfkd(word);
       if (map.containsValue(nfkdWord) == false) {
-        throw Exception(
-            'mnemonic: "$word" does not exist in ${language.label}');
+        throw Exception('mnemonic: "$word" does not exist in $language');
       } else {
         int index =
             map.entries.firstWhere((entry) => entry.value == nfkdWord).key;
