@@ -2,6 +2,8 @@
 
 import 'dart:math';
 
+import 'package:unorm_dart/unorm_dart.dart';
+
 import 'crypto.dart';
 import 'language.dart';
 import 'utils.dart';
@@ -100,10 +102,13 @@ class Mnemonic {
     Map<int, String> map = language.map;
     // convert to indexes.
     for (var word in words) {
-      if (map.containsValue(word) == false) {
-        throw Exception('mnemonic: "$word" does not exist in $language');
+      var nfkdWord = nfkd(word);
+      if (map.containsValue(nfkdWord) == false) {
+        throw Exception(
+            'mnemonic: "$word" does not exist in ${language.label}');
       } else {
-        int index = map.entries.firstWhere((entry) => entry.value == word).key;
+        int index =
+            map.entries.firstWhere((entry) => entry.value == nfkdWord).key;
         indexes.add(index);
       }
     }
