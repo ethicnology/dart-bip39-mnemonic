@@ -74,5 +74,14 @@ void main() {
         throwsException,
       );
     });
+
+    test(
+        'Mnemonic.fromSentence with non NFKD words will format them anyway, fougère',
+        () {
+      String sentence =
+          "insecte pirogue tamiser goudron torpille rejouer essieu lactose bouquin humble service dauphin gendarme fougère visqueux essence projeter thème éruption chausson incliner plastron bambin boiser";
+      var mnemonic = Mnemonic.fromSentence(sentence, Language.french);
+      expect(mnemonic.words[13] == 'fougère', false);
+    });
   });
 }
