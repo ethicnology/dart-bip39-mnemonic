@@ -38,5 +38,5 @@ void main() {
   String nonNfkd = 'échelle';
   String nfkd = 'échelle';
   print(french.isValid(nfkd)); // true
-  print(french.isValid(nonNfkd)); // true, because isValid formats input}
+  print(french.isValid(nonNfkd)); // true, because isValid formats input
 }
