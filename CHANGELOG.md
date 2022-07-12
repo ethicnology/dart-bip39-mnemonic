@@ -47,3 +47,6 @@
 
 ## 3.0.3
 - isValid function formats input (NFKD)
+
+## 3.0.4
+- Mnemonic.fromSentence formats (NFKD) each words before checking their validity
