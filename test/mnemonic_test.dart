@@ -48,6 +48,13 @@ void main() {
       );
     });
 
+    test('Mnemonic.generate from invalid entropy length', () {
+      expect(
+        () => Mnemonic.generate(Language.french, entropy_length: 64),
+        throwsException,
+      );
+    });
+
     test('Mnemonic.fromSentence foreign word', () {
       String sentence =
           "esperanto 가격 가격 가격 가격 가격 가격 가격 가격 가격 가격 가능";
