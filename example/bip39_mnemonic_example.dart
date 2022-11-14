@@ -5,8 +5,11 @@ void main() {
   // DO NOT USE THESE DATA!
 
   // Constructs Mnemonic from random secure 256bits entropy with optional passphrase
-  var mnemonic =
-      Mnemonic.generate(Language.french, passphrase: "SomethingR0bùst");
+  var mnemonic = Mnemonic.generate(
+    Language.french,
+    passphrase: "SomethingR0bùst",
+    entropyLength: 256,
+  );
   print(mnemonic.sentence);
   // million alpaga revivre calmer dogme verdure capsule folie déborder facette lanceur saboter recycler tripler symbole savant rieur jeudi outrager volume situer jardin civil reculer
   String hexSeed = hex.encode(mnemonic.seed); // convert to hex

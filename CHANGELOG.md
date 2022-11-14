@@ -50,3 +50,8 @@
 
 ## 3.0.4
 - Mnemonic.fromSentence formats (NFKD) each words before checking their validity
+
+## 3.0.5
+- Mnemonic.generate has a new entropyLength params
+- Update dependencies
+- Update github actions
