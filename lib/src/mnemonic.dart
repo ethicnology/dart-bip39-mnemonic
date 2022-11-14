@@ -88,10 +88,21 @@ class Mnemonic {
     }
   }
 
-  /// Constructs Mnemonic from random secure 256 bits entropy.
-  Mnemonic.generate(this.language, {this.passphrase = ""}) {
+  /// Constructs Mnemonic from one of these entropy lengths: [128, 160, 192, 224, 256]
+  Mnemonic.generate(
+    this.language, {
+    this.passphrase = "",
+    int entropy_length = 256,
+  }) {
+    if (![128, 160, 192, 224, 256].contains(entropy_length)) {
+      throw Exception(
+          "mnemonic: unexpected entropy length, choose one of: [128, 160, 192, 224, 256]");
+    }
     var random = Random.secure();
-    entropy = List<int>.generate(32, (i) => random.nextInt(256));
+    entropy = List<int>.generate(
+      entropy_length ~/ 8,
+      (i) => random.nextInt(256),
+    );
   }
 
   /// Constructs Mnemonic from a sentence by retrieving the original entropy.
