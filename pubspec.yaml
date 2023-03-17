@@ -1,6 +1,6 @@
 name: bip39_mnemonic
 description: Mnemonic code for generating deterministic keys a.k.a. BIP39.
-version: 3.0.5
+version: 3.0.6
 homepage: https://github.com/ethicnology/dart-bip39-mnemonic
 
 environment:

@@ -55,3 +55,6 @@
 - Mnemonic.generate has a new entropyLength params
 - Update dependencies
 - Update github actions
+
+## 3.0.6
+- Update Pointycastle dependency
