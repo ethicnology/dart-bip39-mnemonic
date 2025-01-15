@@ -58,3 +58,6 @@
 
 ## 3.0.6
 - Update Pointycastle dependency
+
+## 3.0.7
+- Upgrade dependencies
