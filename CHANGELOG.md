@@ -67,3 +67,6 @@
 - Update documentation
 - Upgrade pointycastle v4.0.0
 - Switch License GPL to MIT
+
+## 3.0.9
+- Allow pointycastle v3 as well
