@@ -61,3 +61,9 @@
 
 ## 3.0.7
 - Upgrade dependencies
+
+## 3.0.8
+- Mnemonic.fromWords with unit tests
+- Update documentation
+- Upgrade pointycastle v4.0.0
+- Switch License GPL to MIT
