@@ -162,4 +162,14 @@ class Mnemonic {
       throw Exception('mnemonic: invalid checksum');
     }
   }
+
+  /// Constructs Mnemonic from a words, this new method use named parameters, the language is English by default.
+  static Mnemonic fromWords({
+    required List<String> words,
+    Language language = Language.english,
+    String passphrase = '',
+  }) {
+    final sentence = words.join(language.separator);
+    return Mnemonic.fromSentence(sentence, language, passphrase: passphrase);
+  }
 }
