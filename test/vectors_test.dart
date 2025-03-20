@@ -18,6 +18,16 @@ void main() async {
       }
     });
 
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
     test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
@@ -45,6 +55,16 @@ void main() async {
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
         var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
@@ -80,6 +100,16 @@ void main() async {
       }
     });
 
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
     test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
@@ -107,6 +137,16 @@ void main() async {
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
         var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
@@ -142,6 +182,16 @@ void main() async {
       }
     });
 
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
     test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
@@ -173,6 +223,16 @@ void main() async {
       }
     });
 
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
     test('Mnemonic.seed', () {
       for (var i = 0; i < vector.length; i++) {
         List<int> bytes = hex.decode(vector[i]['entropy']!);
@@ -200,6 +260,16 @@ void main() async {
     test('Mnemonic.fromSentence', () {
       for (var i = 0; i < vector.length; i++) {
         var mnemonic = Mnemonic.fromSentence(vector[i]['mnemonic']!, language);
+        expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
+      }
+    });
+
+    test('Mnemonic.fromWords', () {
+      for (var i = 0; i < vector.length; i++) {
+        var mnemonic = Mnemonic.fromWords(
+          words: vector[i]['mnemonic']!.split(language.separator),
+          language: language,
+        );
         expect(hex.encode(mnemonic.entropy), equals(vector[i]['entropy']!));
       }
     });
