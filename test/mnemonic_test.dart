@@ -38,7 +38,7 @@ void main() {
   group('Mnemonic constructors', () {
     test('Mnemonic default constructor', () {
       expect(() => Mnemonic([0], Language.french),
-          throwsA(isA<MnemonicIndexesLengthException>()));
+          throwsA(isA<MnemonicUnexpectedInitialEntropyLengthException>()));
     });
 
     test('Mnemonic.generate', () {
