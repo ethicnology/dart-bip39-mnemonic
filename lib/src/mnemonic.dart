@@ -7,6 +7,7 @@ import 'package:unorm_dart/unorm_dart.dart';
 import 'crypto.dart';
 import 'language.dart';
 import 'utils.dart';
+import 'exceptions.dart';
 
 /// BIP39: A mnemonic sentence is superior for human interaction compared to the handling of raw binary or hexadecimal representations of a wallet seed.
 class Mnemonic {
@@ -54,7 +55,7 @@ class Mnemonic {
       String bit = _binary.substring(i, i + 11);
       indexes.add(int.parse(bit, radix: 2));
     }
-    indexes.length != _MS ? throw Exception("mnemonic: indexes length") : null;
+    indexes.length != _MS ? throw MnemonicIndexesLengthException(indexes.length) : null;
     return indexes;
   }
 
@@ -84,7 +85,7 @@ class Mnemonic {
   /// Constructs Mnemonic from entropy bytes.
   Mnemonic(this.entropy, this.language, {this.passphrase = ""}) {
     if (![128, 160, 192, 224, 256].contains(_ENT)) {
-      throw Exception("mnemonic: unexpected initial entropy length");
+      throw MnemonicUnexpectedInitialEntropyLengthException(_ENT);
     }
   }
 
@@ -95,8 +96,7 @@ class Mnemonic {
     int entropyLength = 256,
   }) {
     if (![128, 160, 192, 224, 256].contains(entropyLength)) {
-      throw Exception(
-          "mnemonic: unexpected entropy length, choose one of: [128, 160, 192, 224, 256]");
+      throw MnemonicUnexpectedEntropyLengthException(entropyLength);
     }
     var random = Random.secure();
     entropy = List<int>.generate(
@@ -115,7 +115,7 @@ class Mnemonic {
     for (var word in words) {
       var nfkdWord = nfkd(word);
       if (map.containsValue(nfkdWord) == false) {
-        throw Exception('mnemonic: "$word" does not exist in $language');
+        throw MnemonicWordNotFoundException(word, language.name);
       } else {
         int index =
             map.entries.firstWhere((entry) => entry.value == nfkdWord).key;
@@ -141,7 +141,7 @@ class Mnemonic {
         checksumLength = 8;
         break;
       default:
-        throw Exception("mnemonic: unexpected sentence length");
+        throw MnemonicUnexpectedSentenceLengthException(indexes.length);
     }
     // convert indexes to bits to remove the checksum.
     String bits = indexes
@@ -159,7 +159,7 @@ class Mnemonic {
       entropy.add(int.parse(bit, radix: 2));
     }
     if (_checksum != extractedChecksum) {
-      throw Exception('mnemonic: invalid checksum');
+      throw MnemonicInvalidChecksumException(sentence);
     }
   }
 
