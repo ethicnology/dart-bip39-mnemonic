@@ -8,6 +8,7 @@ import 'crypto.dart';
 import 'language.dart';
 import 'utils.dart';
 import 'exceptions.dart';
+import 'mnemonic_length.dart';
 
 /// BIP39: A mnemonic sentence is superior for human interaction compared to the handling of raw binary or hexadecimal representations of a wallet seed.
 class Mnemonic {
@@ -27,6 +28,7 @@ class Mnemonic {
 
   /// BIP39: We refer to the initial entropy length as ENT.
   int get _ENT => entropy.length * 8;
+  late MnemonicLength length;
 
   /// BIP39: The checksum length (CS)
   int get _CS => _ENT ~/ 32;
@@ -43,9 +45,7 @@ class Mnemonic {
 
   /// Returns entropy + checksum in binary string.
   /// BIP39: This checksum is appended to the end of the initial entropy.
-  String get _binary {
-    return bytesToBits(entropy) + _checksum;
-  }
+  String get _binary => bytesToBits(entropy) + _checksum;
 
   /// Returns mnemonic indexes.
   /// BIP39: Next, these concatenated bits are split into groups of 11 bits, each encoding a number from 0-2047, serving as an index into a wordlist.
@@ -55,7 +55,9 @@ class Mnemonic {
       String bit = _binary.substring(i, i + 11);
       indexes.add(int.parse(bit, radix: 2));
     }
-    indexes.length != _MS ? throw MnemonicIndexesLengthException(indexes.length) : null;
+    indexes.length != _MS
+        ? throw MnemonicIndexesLengthException(indexes.length)
+        : null;
     return indexes;
   }
 
@@ -70,9 +72,7 @@ class Mnemonic {
   }
 
   /// BIP39: Use the joined words as a mnemonic sentence.
-  String get sentence {
-    return words.join(language.separator);
-  }
+  String get sentence => words.join(language.separator);
 
   /// BIP39: To create a binary seed from the mnemonic, we use the PBKDF2 function with a mnemonic sentence (in UTF-8 NFKD) used as the password and the string "mnemonic" + passphrase (again in UTF-8 NFKD) used as the salt.
   /// The iteration count is set to 2048 and HMAC-SHA512 is used as the pseudo-random function.
@@ -83,24 +83,18 @@ class Mnemonic {
   }
 
   /// Constructs Mnemonic from entropy bytes.
-  Mnemonic(this.entropy, this.language, {this.passphrase = ""}) {
-    if (![128, 160, 192, 224, 256].contains(_ENT)) {
-      throw MnemonicUnexpectedInitialEntropyLengthException(_ENT);
-    }
-  }
+  Mnemonic(this.entropy, this.language, {this.passphrase = ""})
+      : length = MnemonicLength.fromEntropy(entropy.length * 8);
 
   /// Constructs Mnemonic from one of these entropy lengths: [128, 160, 192, 224, 256]
   Mnemonic.generate(
     this.language, {
     this.passphrase = "",
-    int entropyLength = 256,
+    this.length = MnemonicLength.words24,
   }) {
-    if (![128, 160, 192, 224, 256].contains(entropyLength)) {
-      throw MnemonicUnexpectedEntropyLengthException(entropyLength);
-    }
     var random = Random.secure();
     entropy = List<int>.generate(
-      entropyLength ~/ 8,
+      length.bytes,
       (i) => random.nextInt(256),
     );
   }
@@ -108,58 +102,45 @@ class Mnemonic {
   /// Constructs Mnemonic from a sentence by retrieving the original entropy.
   Mnemonic.fromSentence(String sentence, this.language,
       {this.passphrase = ""}) {
-    List<String> words = sentence.split(language.separator);
-    List<int> indexes = [];
-    Map<int, String> map = language.map;
-    // convert to indexes.
-    for (var word in words) {
-      var nfkdWord = nfkd(word);
-      if (map.containsValue(nfkdWord) == false) {
-        throw MnemonicWordNotFoundException(word, language.name);
-      } else {
-        int index =
-            map.entries.firstWhere((entry) => entry.value == nfkdWord).key;
-        indexes.add(index);
+    try {
+      List<String> words = sentence.split(language.separator);
+      List<int> indexes = [];
+      Map<int, String> map = language.map;
+      // convert to indexes.
+      for (var word in words) {
+        var nfkdWord = nfkd(word);
+        if (map.containsValue(nfkdWord) == false) {
+          throw MnemonicWordNotFoundException(word, language.name);
+        } else {
+          int index =
+              map.entries.firstWhere((entry) => entry.value == nfkdWord).key;
+          indexes.add(index);
+        }
       }
-    }
-    // determine checksum length in bits.
-    int checksumLength;
-    switch (indexes.length) {
-      case 12:
-        checksumLength = 4;
-        break;
-      case 15:
-        checksumLength = 5;
-        break;
-      case 18:
-        checksumLength = 6;
-        break;
-      case 21:
-        checksumLength = 7;
-        break;
-      case 24:
-        checksumLength = 8;
-        break;
-      default:
-        throw MnemonicUnexpectedSentenceLengthException(indexes.length);
-    }
-    // convert indexes to bits to remove the checksum.
-    String bits = indexes
-        .map((byte) => byte
-            .toRadixString(2)
-            .padLeft(11, '0')) // (each index is encoded on 11 bits)
-        .join('');
-    // remove checksum from bits.
-    var bitsEntropy = bits.substring(0, bits.length - checksumLength);
-    var extractedChecksum = bits.substring(bits.length - checksumLength);
-    // converts bits entropy back to bytes.
-    entropy = [];
-    for (var i = 0; i < bitsEntropy.length; i += 8) {
-      String bit = bitsEntropy.substring(i, i + 8);
-      entropy.add(int.parse(bit, radix: 2));
-    }
-    if (_checksum != extractedChecksum) {
-      throw MnemonicInvalidChecksumException(sentence);
+      // determine checksum length in bits.
+      length = MnemonicLength.fromWords(indexes.length);
+      final checksumLength = length.checksum;
+
+      // convert indexes to bits to remove the checksum.
+      final bits = indexes
+          .map((byte) => byte
+              .toRadixString(2)
+              .padLeft(11, '0')) // (each index is encoded on 11 bits)
+          .join('');
+      // remove checksum from bits.
+      final bitsEntropy = bits.substring(0, bits.length - checksumLength);
+      final extractedChecksum = bits.substring(bits.length - checksumLength);
+      // converts bits entropy back to bytes.
+      entropy = [];
+      for (var i = 0; i < bitsEntropy.length; i += 8) {
+        final bit = bitsEntropy.substring(i, i + 8);
+        entropy.add(int.parse(bit, radix: 2));
+      }
+      if (_checksum != extractedChecksum) {
+        throw MnemonicInvalidChecksumException(sentence);
+      }
+    } catch (_) {
+      rethrow;
     }
   }
 

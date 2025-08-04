@@ -1,3 +1,5 @@
+import 'mnemonic_length.dart';
+
 abstract class MnemonicException implements Exception {
   final String message;
 
@@ -9,32 +11,27 @@ abstract class MnemonicException implements Exception {
 
 class MnemonicIndexesLengthException extends MnemonicException {
   MnemonicIndexesLengthException(int length)
-      : super("MnemonicException: indexes length $length is not valid");
-}
-
-class MnemonicUnexpectedInitialEntropyLengthException
-    extends MnemonicException {
-  MnemonicUnexpectedInitialEntropyLengthException(int length)
-      : super("MnemonicException: unexpected initial entropy length $length");
+      : super("indexes length $length is not valid");
 }
 
 class MnemonicUnexpectedEntropyLengthException extends MnemonicException {
   MnemonicUnexpectedEntropyLengthException(int length)
       : super(
-      "MnemonicException: unexpected entropy length, choose one of: [128, 160, 192, 224, 256] but got $length");
-}
-
-class MnemonicWordNotFoundException extends MnemonicException {
-  MnemonicWordNotFoundException(String word, String language)
-      : super('mnemonic: "$word" does not exist in $language');
+            "Expect mnemonic [${MnemonicLength.availableBits.join(', ')}] entropy bits, got $length.");
 }
 
 class MnemonicUnexpectedSentenceLengthException extends MnemonicException {
   MnemonicUnexpectedSentenceLengthException(int length)
-      : super("mnemonic: unexpected sentence length: $length");
+      : super(
+            "Expect mnemonic [${MnemonicLength.availableWords.join(', ')}] words, got $length.");
+}
+
+class MnemonicWordNotFoundException extends MnemonicException {
+  MnemonicWordNotFoundException(String word, String language)
+      : super('"$word" does not exist in $language');
 }
 
 class MnemonicInvalidChecksumException extends MnemonicException {
   MnemonicInvalidChecksumException(String sentence)
-      : super('mnemonic: invalid checksum for sentence: "$sentence"');
+      : super('invalid checksum for sentence: "$sentence"');
 }
