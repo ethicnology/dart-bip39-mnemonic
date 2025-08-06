@@ -112,7 +112,7 @@ class Mnemonic {
       entropy = bitsEntropy.toBytes();
 
       if (_checksum.toBinaryString() != extractedChecksum.toBinaryString()) {
-        throw MnemonicInvalidChecksumException(sentence);
+        throw MnemonicInvalidChecksumException(words);
       }
     } catch (_) {
       rethrow;

@@ -6,12 +6,12 @@ abstract class MnemonicException implements Exception {
   MnemonicException(this.message);
 
   @override
-  String toString() => 'MnemonicException: $message';
+  String toString() => message;
 }
 
 class MnemonicIndexesLengthException extends MnemonicException {
   MnemonicIndexesLengthException(int length)
-      : super("indexes length $length is not valid");
+      : super("Mnemonic indexes length $length is not valid");
 }
 
 class MnemonicUnexpectedEntropyLengthException extends MnemonicException {
@@ -28,10 +28,10 @@ class MnemonicUnexpectedSentenceLengthException extends MnemonicException {
 
 class MnemonicWordNotFoundException extends MnemonicException {
   MnemonicWordNotFoundException(String word, String language)
-      : super('"$word" does not exist in $language');
+      : super('Mnemonic word "$word" does not exist in $language');
 }
 
 class MnemonicInvalidChecksumException extends MnemonicException {
-  MnemonicInvalidChecksumException(String sentence)
-      : super('invalid checksum for sentence: "$sentence"');
+  MnemonicInvalidChecksumException(List<String> words)
+      : super('Mnemonic checksum ${words.last} is invalid');
 }
