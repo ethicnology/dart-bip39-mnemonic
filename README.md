@@ -34,7 +34,7 @@ Please take a look at the examples in the folder `example`
   final mnemonic = Mnemonic.generate(
     Language.french,
     passphrase: "SomethingR0bùst",
-    entropyLength: 256,
+    length: MnemonicLength.words24,  // ✅ New enum-based parameter
   );
   print(mnemonic.sentence);
   // million alpaga revivre calmer dogme verdure capsule folie déborder facette lanceur saboter recycler tripler symbole savant rieur jeudi outrager volume situer jardin civil reculer

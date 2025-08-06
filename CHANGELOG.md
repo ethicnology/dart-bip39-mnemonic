@@ -1,3 +1,25 @@
+## 4.0.0
+
+- the `entropyLength` parameter was replaced with the `length` parameter in `Mnemonic.generate()`.
+
+**Before**
+```dart
+final mnemonic = Mnemonic.generate(
+  Language.french,
+  passphrase: "SomethingR0bùst", 
+  entropyLength: 256,  // ❌ This parameter no longer exists
+);
+```
+
+**After**
+```dart
+final mnemonic = Mnemonic.generate(
+  Language.french,
+  passphrase: "SomethingR0bùst",
+  length: MnemonicLength.words24,  // ✅ New enum-based parameter
+);
+```
+
 ## 3.0.10
 
 - feat: add mnemonic exception classes for better error handling
