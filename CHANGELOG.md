@@ -1,3 +1,7 @@
+## 4.0.1
+
+- refactor: use hyphens in chinese labels instead of spaces to align with rust bip39 names in bip85
+
 ## 4.0.0
 
 - the `entropyLength` parameter was replaced with the `length` parameter in `Mnemonic.generate()`.
