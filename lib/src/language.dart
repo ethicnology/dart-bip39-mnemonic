@@ -20,8 +20,8 @@ enum Language {
   portuguese('portuguese', portugueseList),
   czech('czech', czechList),
   korean('korean', koreanList),
-  simplifiedChinese('chinese simplified', simplifiedChineseList),
-  traditionalChinese('chinese traditional', traditionalChineseList),
+  simplifiedChinese('chinese-simplified', simplifiedChineseList),
+  traditionalChinese('chinese-traditional', traditionalChineseList),
   japanese('japanese', japaneseList);
 
   final String label;

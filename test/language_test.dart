@@ -9,8 +9,8 @@ List<String> languages = [
   'portuguese',
   'czech',
   'korean',
-  'chinese simplified',
-  'chinese traditional',
+  'chinese-simplified',
+  'chinese-traditional',
   'japanese'
 ];
 
