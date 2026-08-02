@@ -129,4 +129,42 @@ class Mnemonic {
           language,
           passphrase: passphrase,
         );
+
+  /// Returns every word completing [words] into a sentence with a valid checksum.
+  ///
+  /// [words] must hold the whole sentence but its last word, that is 11, 14,
+  /// 17, 20 or 23 words.
+  ///
+  /// The last word of a sentence holds the CS checksum bits preceded by the
+  /// 11 - CS trailing bits of the entropy. Each of those 2^(11 - CS) entropy
+  /// tails yields a single checksum, hence a single valid word, so the
+  /// candidates are derived instead of being searched: 128 words for a 12
+  /// words sentence, 64 for 15, 32 for 18, 16 for 21 and 8 for 24.
+  ///
+  /// Candidates are returned in ascending wordlist index order and are all
+  /// distinct.
+  static List<String> lastWordCandidates({
+    required List<String> words,
+    Language language = Language.english,
+  }) {
+    final length = MnemonicLength.fromPartialWords(words.length);
+
+    // entropy bits held by the last word, the CS remaining ones are the checksum.
+    final entropyBits = 11 - length.checksum;
+    final known = BitsExtension.fromWords(words, language);
+    final wordlist = language.list;
+
+    List<String> result = [];
+    for (var tail = 0; tail < (1 << entropyBits); tail++) {
+      final tailBits = BitsExtension.fromString(
+        tail.toRadixString(2).padLeft(entropyBits, '0'),
+      );
+      final hash = sha256((known + tailBits).toBytes());
+      final checksum =
+          BitsExtension.fromBytes(hash).sublist(0, length.checksum);
+      final index = int.parse((tailBits + checksum).toBinaryString(), radix: 2);
+      result.add(wordlist[index]);
+    }
+    return result;
+  }
 }

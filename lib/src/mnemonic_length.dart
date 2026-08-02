@@ -17,6 +17,8 @@ enum MnemonicLength {
   int get bytes => entropy ~/ 8;
   static List<int> get availableBits => values.map((e) => e.entropy).toList();
   static List<int> get availableWords => values.map((e) => e.words).toList();
+  static List<int> get availablePartialWords =>
+      values.map((e) => e.words - 1).toList();
 
   static MnemonicLength fromEntropy(int entropy) {
     try {
@@ -31,6 +33,15 @@ enum MnemonicLength {
       return values.firstWhere((e) => e.words == wordCount);
     } catch (e) {
       throw MnemonicUnexpectedSentenceLengthException(wordCount);
+    }
+  }
+
+  /// Returns the length of a sentence missing its last word only.
+  static MnemonicLength fromPartialWords(int wordCount) {
+    try {
+      return values.firstWhere((e) => e.words - 1 == wordCount);
+    } catch (e) {
+      throw MnemonicUnexpectedPartialSentenceLengthException(wordCount);
     }
   }
 }

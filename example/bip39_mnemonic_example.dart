@@ -38,6 +38,19 @@ void main() {
 
   //
   //
+  // List the words completing a sentence missing its last word only.
+  // A 12 words sentence has 128 valid last words, a 24 words one has 8.
+  List<String> incomplete = words.sublist(0, 11);
+  List<String> candidates = Mnemonic.lastWordCandidates(words: incomplete);
+  print(candidates.length);
+  // 128
+  print(candidates.take(5).toList());
+  // [absorb, add, agent, allow, answer]
+  print(candidates.contains(words.last));
+  // true
+
+  //
+  //
   // Constructs a Mnemonic from Entropy bytes
   String hexEntropy =
       "677765ded2b5f05fd11d9bcc38b863fda3fa06475c77bf1e99a668af355b96e2";
