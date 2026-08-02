@@ -26,6 +26,13 @@ class MnemonicUnexpectedSentenceLengthException extends MnemonicException {
             "Expect mnemonic [${MnemonicLength.availableWords.join(', ')}] words, got $length.");
 }
 
+class MnemonicUnexpectedPartialSentenceLengthException
+    extends MnemonicException {
+  MnemonicUnexpectedPartialSentenceLengthException(int length)
+      : super(
+            "Expect mnemonic missing its last word only, that is [${MnemonicLength.availablePartialWords.join(', ')}] words, got $length.");
+}
+
 class MnemonicWordNotFoundException extends MnemonicException {
   MnemonicWordNotFoundException(String word, String language)
       : super('Mnemonic word "$word" does not exist in $language');

@@ -64,6 +64,30 @@ Please take a look at the examples in the folder `example`
   print(hex.encode(mnemonic2.seed));
 ```
 
+### Find the possible last words of an incomplete Sentence
+```dart
+  // Pass the whole sentence but its last word: 11, 14, 17, 20 or 23 words.
+  List<String> incomplete = words.sublist(0, 11);
+  List<String> candidates = Mnemonic.lastWordCandidates(words: incomplete);
+  print(candidates.length);
+  // 128
+  print(candidates.take(5).toList());
+  // [absorb, add, agent, allow, answer]
+```
+
+The last word holds the `CS` checksum bits preceded by the `11 - CS` trailing
+bits of the entropy, so exactly `2^(11 - CS)` words are valid. Candidates are
+derived from the checksum instead of being searched among the 2048 words, so
+the cost is one SHA256 per returned word.
+
+| sentence | valid last words |
+| --- | --- |
+| 12 words | 128 |
+| 15 words | 64 |
+| 18 words | 32 |
+| 21 words | 16 |
+| 24 words | 8 |
+
 ### Construct a Mnemonic from Entropy bytes
 ```dart
   // Constructs a Mnemonic from Entropy bytes
