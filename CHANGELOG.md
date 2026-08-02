@@ -1,3 +1,7 @@
+## 4.1.0
+
+- feat: add `Mnemonic.lastWordCandidates()` listing every word completing a sentence missing its last word only
+
 ## 4.0.1
 
 - refactor: use hyphens in chinese labels instead of spaces to align with rust bip39 names in bip85
